@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -17,7 +19,17 @@ import javax.validation.constraints.Size;
 
 @Document(collection="students")
 @Entity
-public class Student {
+public class Student implements Serializable {
+
+    public Student(String id, String firstName, String lastName, Integer gpa, String email, String phoneNumber, List<String> courseList) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gpa = gpa;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.courseList = courseList;
+    }
 
     @Id
     private String id;
@@ -33,13 +45,16 @@ public class Student {
     private String lastName;
 
     @JsonIgnore
-    private float gpa;
+    private Integer gpa;
 
     private String email;
     private String phoneNumber;
 
     @Size(min=1, message ="You must have at least one course")
     private List<String> courseList;
+
+            public Student(String id, String firstName, String lastName, String s, String email) {
+    }
 
 
     public String getId() {
@@ -71,7 +86,7 @@ public class Student {
         return gpa;
     }
 
-    public void setGpa(float gpa) {
+    public void setGpa(int gpa) {
         this.gpa = gpa;
     }
 

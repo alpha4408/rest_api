@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping(path = "/school")
 public class StudentsController {
@@ -38,19 +38,21 @@ public class StudentsController {
         return studentsService.getStudentById(id);
 
     }
-
-
-
     @DeleteMapping(path = ("/delete/{ID}"))
     public void deleteStudentById(@PathVariable(value = "ID") String id){
         logger.info("Trying to delete the records by id", id);
         studentsService.deleteStudentById(id);
 
     }
-//    @GetMapping(path ="/courses")
-//    public List<Student>getCourses(){
-//        return studentsService.getCourses();
+//TODO: Update this app to find by GPA
+//    @GetMapping(path = ("/{gpa}"))
+//    public void findbyGPA(@PathVariable (value = "gpa") Integer gpa){
+//        studentsService.findbyGPA(gpa);
 //    }
 
-
 }
+
+
+
+
+

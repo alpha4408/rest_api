@@ -2,7 +2,7 @@ package com.alpha.rest_api.Services;
 
 
 
-import com.alpha.rest_api.Controllers.StudentsController;
+
 import com.alpha.rest_api.Repository.IStudentsRepository;
 import com.alpha.rest_api.model.ResponseData;
 import com.alpha.rest_api.model.Student;
@@ -10,19 +10,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 
 import java.util.List;
 
 @Service
-public class StudentsService {
+public class StudentsService implements IStudentsService {
 
     private static Logger logger = LoggerFactory.getLogger(StudentsService.class);
 
     @Autowired
      private IStudentsRepository studentsRepository;
 
-//    @Autowired(required = false)
-//    private Student student;
+    @Autowired
+    private RestTemplate restTemplate;
+
+
 
     public List<Student> getAllStudents() {
 
@@ -41,10 +45,9 @@ public class StudentsService {
 
         Student response = studentsRepository.findByid(id);
 
-        logger.info("Successfully retrieved student by ID {}", id);
+//        ResponseData responseData = ResponseData.Success;
 
-        ResponseData responseData = ResponseData.Success;
-        System.out.println(responseData);
+        logger.info("Successfully retrieved student by ID {}", id);
 
         return response;
 
@@ -52,15 +55,22 @@ public class StudentsService {
     }
 
     public ResponseData deleteStudentById(String id) {
+
+
+
         logger.info("Trying to delete by ID {}");
+
         studentsRepository.deleteById(id);
         logger.info("Successfully deleted student by ID {}");
-
+        System.out.println(ResponseData.Success);
         return ResponseData.Success;
 
     }
 
-    public List<Student> getCourses() {
-        return studentsRepository.findAllByCourseList();
-    }
+//    public Student findbyGPA(Integer gpa){
+//        return studentsRepository.findByGpa(gpa);
+//    }
+
+
+
 }

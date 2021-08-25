@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IStudentsRepository extends MongoRepository<Student, String> {
     Student findByid(String id);
+    Student findByGpa(Integer gpa);
     List<Student> findAllByCourseList();
 
 }
